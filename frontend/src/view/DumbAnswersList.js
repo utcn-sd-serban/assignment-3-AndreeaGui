@@ -12,8 +12,10 @@ const DumbAnswersList = ({ answers, onDelete, onUpdate, onAnswerVoteUp, onAnswer
                 <tr>
                     <th>Answer ID</th>
                     <th>User</th>
-                    <th>Title</th>
+                    <th>Question</th>
                     <th>Text</th>
+                    <th>UpVotes</th>
+                    <th>DownVotes</th>
                     <th></th>
                 </tr>
             </thead>
@@ -25,6 +27,8 @@ const DumbAnswersList = ({ answers, onDelete, onUpdate, onAnswerVoteUp, onAnswer
                             <td>{answer.userId}</td>
                             <td>{answer.questionId}</td>
                             <td>{answer.text}</td>
+                            <td>{answer.upVotes}</td>
+                            <td>{answer.downVotes}</td>
                             <td>
                                 <div class = "buttons is-right">
                                 <span class="button is-primary"
@@ -36,11 +40,11 @@ const DumbAnswersList = ({ answers, onDelete, onUpdate, onAnswerVoteUp, onAnswer
                                     Update
                                 </span>
                                 <span class="button is-primary is-success is-outlined"
-                                onClick={() => onAnswerVoteUp(answer.answerId)}>
+                                onClick={() => onAnswerVoteUp(answer.questionId, answer.answerId)}>
                                     Vote Up
                                 </span>
                                 <span class="button is-primary is-danger is-outlined"
-                                onClick={() => onAnswerVoteDown(answer.answerId)}>
+                                onClick={() => onAnswerVoteDown(answer.questionId, answer.answerId)}>
                                     Vote Down
                                 </span>
                                 </div>

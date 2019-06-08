@@ -2,7 +2,6 @@ package ro.utcn.sd.agui.a1.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import ro.utcn.sd.agui.a1.dto.AnswerDTO;
 import ro.utcn.sd.agui.a1.dto.QuestionDTO;
 import ro.utcn.sd.agui.a1.entity.User;
 import ro.utcn.sd.agui.a1.service.QuestionManagementService;

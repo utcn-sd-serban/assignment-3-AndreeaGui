@@ -49,6 +49,9 @@ export default class SmartQuestionDetails extends Component {
                 title={this.state.question.title}
                 text={this.state.question.text}
                 tags={this.state.question.tags}
+                dateTime={this.state.question.dateTime}
+                upVotes={this.state.question.upVotes}
+                downVotes={this.state.question.downVotes}
                 questionIndex={this.props.match.params.index}
                 answerUpdateText={this.state.answer.updateAnswerText}
                 answers={this.state.currentAnswers}
@@ -59,6 +62,7 @@ export default class SmartQuestionDetails extends Component {
                 onAnswerVoteUp={votePresenter.onAnswerVoteUp}
                 onQuestionVoteDown={votePresenter.onQuestionVoteDown}
                 onQuestionVoteUp={votePresenter.onQuestionVoteUp}
+                onListAnswersByScore={answerPresenter.onListAnswersByScore}
 
             />
         );

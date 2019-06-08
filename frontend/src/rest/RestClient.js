@@ -1,3 +1,5 @@
+import CommandInvoker from "./CommandInvoker";
+
 const BASE_URL = "http://localhost:8080";
 
 class RestClient{
@@ -5,77 +7,25 @@ class RestClient{
         this.username = "";
         this.password = "";
         this.authorization="None";
+        this.commandInvoker = new CommandInvoker(this.authorization);
     }
 
     authenticate(username, password){
         this.username = username;
         this.password = password;
         this.authorization = "Basic "+btoa(username + ":" + password);
+        this.commandInvoker = new CommandInvoker(this.authorization);
     }
 
     logout(){
         this.username = "";
         this.password = "";
         this.authorization="None";
+        this.commandInvoker = new CommandInvoker(this.authorization);
     }
 
-    handleListAllQuestions(){
-        return fetch(BASE_URL + "/questions", {
-            method: "GET",
-            headers: {
-                "Authorization": this.authorization
-            }
-        }).then(response => {
-            if(response.status===200)
-                return response.json();
-            return response.text();
-        });
-    }
-
-    handleFilterQuestionsByTitle(content){
-        return fetch(BASE_URL + "/questions/title/"+content.title, {
-            method: "GET",
-            headers: {
-                "Authorization": this.authorization
-            }
-        }).then(response => {
-            if(response.status===200)
-                return response.json();
-            return response.text();
-        });
-    }
-
-    handleFilterQuestionsByTag(content){
-        
-        return fetch(BASE_URL + "/questions/tag/"+content.tagName, {
-            method: "GET",
-            headers: {
-                "Authorization": this.authorization
-            }
-        }).then(response => {
-            if(response.status===200)
-                return response.json();
-            return response.text();
-        });
-    }
-
-    handleCreateQuestion(content) {
-        return fetch(BASE_URL + "/questions", {
-            method: "POST",
-            headers: {
-                "Authorization": this.authorization,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                "title": content.title,
-                "text": content.text,
-                "tags": content.tags
-            })
-        }).then(response => {
-            if(response.status===200)
-                return response.json();
-            return response.text();
-        });
+    handleQuestionCommand(commandRequest){
+        return this.commandInvoker.invokeCommand(commandRequest);
     }
 
     handleListAnswersByQuestion(content){
@@ -87,7 +37,7 @@ class RestClient{
         }).then(response => {
             if(response.status===200)
                 return response.json();
-            return response.text();
+            return {"status": response.status, "text": response.text()};
         });
     }
 
@@ -104,7 +54,7 @@ class RestClient{
         }).then(response => {
             if(response.status===200)
                 return response.json();
-            return response.text();
+            return {"status": response.status, "text": response.text()};
         });
     }
 
@@ -121,7 +71,7 @@ class RestClient{
         }).then(response=>{
             if(response.status === 200)
                 return response.json();
-            return response.text(); 
+            return {"status": response.status, "text": response.text()}; 
         });
     }
 
@@ -149,7 +99,33 @@ class RestClient{
         }).then(response => {
             if(response.status===200)
                 return; //mesaj de ok sau not ok
-            return response.text();
+            return {"status": response.status, "text": response.text()};
+        });
+    }
+
+    handleCreateAnswerVote(content){
+        return fetch(BASE_URL+ "/question/"+content.questionId+"/answers/"+content.answerId+"/vote?isUpVote="+content.type, {
+            method: "POST",
+            headers: {
+                "Authorization": this.authorization
+            }
+        }).then(response => {
+            if(response.status===200)
+                return; //mesaj de ok sau not ok
+            return {"status": response.status, "text": response.text()};
+        });
+    }
+
+    handleListAnswersByScore(questionId){
+        return fetch(BASE_URL+"/question/"+questionId+"/answers-by-score",{
+            method: "GET",
+            headers: {
+                "Authorization": this.authorization
+            }
+        }).then(response => {
+            if(response.status===200)
+                return response.json();
+            return {"status": response.status, "text": response.text()};
         });
     }
 }

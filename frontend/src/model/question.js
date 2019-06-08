@@ -15,12 +15,14 @@ class Question extends EventEmitter {
                 tags: []               
             },
             search: "",
-            filteredQuestions: []
+            filteredQuestions: [],
+            votedQuestions: []
         };
     }
 
     loadAllQuestions(){
-        restClient.handleListAllQuestions().then(responseJson=>{
+
+        restClient.handleQuestionCommand('handleListAllQuestions').execute().then(responseJson=>{
             debugger;
             this.state.questions = responseJson;
             this.emit("change", this.state);
@@ -29,7 +31,7 @@ class Question extends EventEmitter {
 
     addQuestion(title, text, tags) {
         const content = {"title": title, "text": text, "tags": tags};
-        restClient.handleCreateQuestion(content).then(response=>{
+        restClient.handleQuestionCommand('handleCreateQuestion').execute(content).then(response=>{
 
             this.state = {
                 ...this.state,
@@ -65,7 +67,7 @@ class Question extends EventEmitter {
 
     filterByTitle(filterTitle) {
         const content = {"title": filterTitle};
-        restClient.handleFilterQuestionsByTitle(content).then(response=>{
+        restClient.handleQuestionCommand('handleFilterQuestionsByTitle').execute(content).then(response=>{
             this.state = {
                 ...this.state,
                 filteredQuestions: response
@@ -79,7 +81,7 @@ class Question extends EventEmitter {
 
     filterByTag(tagName) {
         const content = {"tagName": tagName};
-        restClient.handleFilterQuestionsByTag(content).then(response=>{
+        restClient.handleQuestionCommand('handleFilterQuestionsByTag').execute(content).then(response=>{
             this.state = {
                 ...this.state,
                 filteredQuestions: response
@@ -92,11 +94,11 @@ class Question extends EventEmitter {
 
     addQuestionVote(questionId, type) {
         const content = {"questionId": questionId, "type": type};
-        restClient.handleCreateQuestion(content).then(response=>{
+        restClient.handleCreateQuestionVote(content).then(response=>{
 
             this.state = {
                 ...this.state,
-                questionVotes: this.state.questionVotes.concat([response])
+            votedQuestions: this.state.questions.concat([response])
     
             };
             this.emit("change", this.state);

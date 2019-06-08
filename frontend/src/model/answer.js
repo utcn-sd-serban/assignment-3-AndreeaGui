@@ -15,7 +15,9 @@ class Answer extends EventEmitter {
                 text: "",
             },
             currentQuestionAnswers: [],
-            updateAnswerText: ""
+            updateAnswerText: "",
+            answerVotes: [],
+            answersByScore: []
 
         };
     }
@@ -103,6 +105,31 @@ class Answer extends EventEmitter {
         });
     }
 
+    addAnswerVote(questionId, answerId, type) {
+        const content = {"questionId": questionId, "answerId": answerId, "type": type};
+        restClient.handleCreateAnswerVote(content).then(response=>{
+
+            this.state = {
+                ...this.state,
+                answerVotes: this.state.answerVotes.concat(response)
+    
+            };
+            this.emit("change", this.state);
+        });
+        
+    }
+
+    listAnswersByScore(questionId){
+        restClient.handleListAnswersByScore(questionId).then(response=>{
+            this.state = {
+                ...this.state,
+                answersByScore: response
+    
+            };
+            this.emit("change", this.state);
+        });
+        window.location.assign("#/answers-by-score");
+    }
 }
 
 const answer = new Answer();

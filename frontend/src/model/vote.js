@@ -7,34 +7,8 @@ class Vote extends EventEmitter {
         super();
         this.state = {
 
-            questionVotes: [{
-                userId: 1,
-                questionId: 1,
-                type: true
-            }, {
-                userId: 2,
-                questionId: 1,
-                type: false
-            }, {
-                userId: 2,
-                questionId: 0,
-                type: true
-            }],
-
-
-            answerVotes: [{
-                userId: 1,
-                answerId: 2,
-                type: false
-            }, {
-                userId: 0,
-                answerId: 0,
-                type: true
-            }, {
-                userId: 1,
-                answerId: 1,
-                type: false
-            }]
+            questionVotes: [],
+            answerVotes: []
 
         };
     }
@@ -42,11 +16,11 @@ class Vote extends EventEmitter {
 
     addQuestionVote(questionId, type) {
         const content = {"questionId": questionId, "type": type};
-        restClient.handleCreateQuestion(content).then(response=>{
+        restClient.handleCreateQuestionVote(content).then(response=>{
 
             this.state = {
                 ...this.state,
-                questionVotes: this.state.questionVotes.concat([response])
+                questionVotes: this.state.questionVotes.concat(response)
     
             };
             this.emit("change", this.state);

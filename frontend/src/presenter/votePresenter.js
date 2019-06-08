@@ -1,22 +1,26 @@
-import vote from "../model/vote";
+import answer from "../model/answer";
 import question from "../model/question";
 
 class VotePresenter {
 
     onQuestionVoteUp = (questionIndex) => {
         question.addQuestionVote(questionIndex, true);
+        question.loadAllQuestions();
     }
 
     onQuestionVoteDown = (questionIndex) => {
         question.addQuestionVote(questionIndex, false);
+        question.loadAllQuestions();
     }
 
-    onAnswerVoteUp = (answerId) => {
-        vote.addAnswerVote(answerId, true);
+    onAnswerVoteUp = (questionId, answerId) => {
+        answer.addAnswerVote(questionId, answerId, true);
+        answer.listAnswersByQuestion(questionId);
     }
 
-    onAnswerVoteDown = (answerId) => {
-        vote.addAnswerVote(answerId, false);
+    onAnswerVoteDown = (questionId, answerId) => {
+        answer.addAnswerVote(questionId, answerId, false);
+        answer.listAnswersByQuestion(questionId);
     }
 
 }

@@ -32,6 +32,10 @@ class AnswerPresenter {
     refreshQuestionAnswers(id){
         answer.listAnswersByQuestion(id);
     }
+
+    onListAnswersByScore(questinId){
+        answer.listAnswersByScore(questinId); 
+    }
 }
 
 const answerPresenter = new AnswerPresenter();
