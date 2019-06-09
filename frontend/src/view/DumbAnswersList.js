@@ -22,7 +22,7 @@ const DumbAnswersList = ({ answers, onDelete, onUpdate, onAnswerVoteUp, onAnswer
             <tbody>
                 {
                     answers.map((answer, index) => (
-                        <tr key={index}>
+                        <tr key={index} data-cy="answer">
                             <td>{answer.answerId}</td>
                             <td>{answer.userId}</td>
                             <td>{answer.questionId}</td>
@@ -31,10 +31,10 @@ const DumbAnswersList = ({ answers, onDelete, onUpdate, onAnswerVoteUp, onAnswer
                             <td>{answer.downVotes}</td>
                             <td>
                                 <div class = "buttons is-right">
-                                <span class="button is-primary"
+                                <button class="button is-primary" data-cy="delete answer"
                                     onClick={() => onDelete(answer.answerId)}>
                                     Delete
-                                </span>
+                                </button>
                                 <span class="button is-primary"
                                     onClick={() => onUpdate(answer.answerId)}>
                                     Update

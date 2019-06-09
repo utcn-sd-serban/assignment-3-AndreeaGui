@@ -9,13 +9,14 @@ const QuestionsList = ({ questions, onCreateQuestion, onViewTags, onFilterByTag,
             <br /> <br />
             <label className="subtitle is-4">Search: </label>
             <input className="input is-medium" type="text" placeholder="Title/Tag"
-                value={search} onChange={e => onSearch(e.target.value)}
+                value={search} data-cy="find title"
+                onChange={e => onSearch(e.target.value)}
             />
             <br />
             <button className="button is-light is-outlined"
                 onClick={onFilterByTag}>Filter questions by tag</button>
             <br />
-            <button className="button is-light is-outlined"
+            <button className="button is-light is-outlined" data-cy="find"
                 onClick={onFilterByTitle}>Filter questions by title</button>
             <br /> <br />
             < DumbQuestionsList
@@ -23,7 +24,7 @@ const QuestionsList = ({ questions, onCreateQuestion, onViewTags, onFilterByTag,
                 questions={questions} />
             <br />
             <button className="button is-light is-outlined"
-                onClick={onCreateQuestion}>Add new question</button>
+                onClick={onCreateQuestion} data-cy="add question">Add new question</button>
 
 
         </div>

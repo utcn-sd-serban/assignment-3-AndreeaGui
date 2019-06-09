@@ -19,12 +19,13 @@ const DumbQuestionsList = ({ questions, onViewTags }) => (
             <tbody>
                 {
                     questions.map((question, index) => (
-                        <tr key={index}>
+                        <tr key={index} data-cy="question">
                             <td>{question.userId}</td>
                             <td>{question.title}</td>
                             <td>{question.text}</td>
                             <td>
-                                <button class="button is-primary" onClick={() => onViewTags(question.questionId)}>
+                                <button class="button is-primary" data-cy="show details" 
+                                    onClick={() => onViewTags(question.questionId)}>
                                     Details
                             </button>
                             </td>

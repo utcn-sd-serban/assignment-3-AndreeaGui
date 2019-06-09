@@ -48,7 +48,7 @@ public class UserSeed implements CommandLineRunner {
                     "Answer 2 for question 1", new Timestamp(System.currentTimeMillis())));
             answerRepository.save(new Answer(null, 2, 1,
                     "Answer 1 for question 2", new Timestamp(System.currentTimeMillis())));
-            answerRepository.save(new Answer(null, 3, 2,
+            answerRepository.save(new Answer(null, 3, 4,
                     "Answer 1 for question 3", new Timestamp(System.currentTimeMillis())));
         }
 
